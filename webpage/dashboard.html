@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+    <title>Feedback Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <script type="text/javascript" src="handler.js">
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <body>
+
+        <h4 class="w3-center">Feedback Dashboard</h4>
+        <div class="w3-row w3-container">
+            <div class="w3-half w3-container w3-center">
+                <select id="cityDropdownList">
+                    <!--
+                     https://tutorialehtml.com/en/html-tutorial-drop-down-lists-menu/
+                     -->
+                    <option value="Delhi">Delhi</option>
+                    <option value="Ladakh">Ladakh</option>
+                </select>
+            </div>
+
+            <div class="w3-half w3-container w3-left">
+                <button class="w3-button w3-black" onclick="cityClicked()">Display Feedback</button>
+            </div>
+
+            <div class="w3-container">
+                <h4 id="serverStatus">Ready</h4>
+            </div>
+        </div>
+
+        <div class="w3-row w3-container">
+
+            <p class="w3-center">Some statistics</p>
+            <div class="w3-col w3-container s4 w3-center">
+                <div class="w3-card-4">
+
+                    <header class="w3-container w3-blue">
+                      <h1>Positive Reviews</h1>
+                    </header>
+
+                    <div class="w3-container">
+                      <h3 id="positiveCountDisplay">0</h3>
+                    </div>
+
+                    <footer class="w3-container w3-blue">
+                      <h3></h3>
+                    </footer>
+
+                </div>
+            </div>
+
+            <div class="w3-col w3-container s4 w3-center">
+                <div class="w3-card-4">
+
+                    <header class="w3-container w3-blue">
+                      <h1>Total Reviews</h1>
+                    </header>
+
+                    <div class="w3-container">
+                      <h3 id="totalCountDisplay">0</h3>
+                    </div>
+
+                    <footer class="w3-container w3-blue">
+                      <h3></h3>
+                    </footer>
+
+                </div>
+            </div>
+
+            <div class="w3-col s4 w3-container w3-center">
+                <div class="w3-card-4">
+
+                    <header class="w3-container w3-blue">
+                      <h1>Negative Reviews</h1>
+                    </header>
+
+                    <div class="w3-container">
+                      <h3 id="negativeCountDisplay">0</h3>
+                    </div>
+
+                    <footer class="w3-container w3-blue">
+                      <h3></h3>
+                    </footer>
+
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+</html>
