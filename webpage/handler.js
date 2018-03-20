@@ -1,4 +1,4 @@
-var URL='http://192.168.1.37:8000';
+var URL='http://localhost:5000';
 
 function cityClicked()
 {
@@ -17,7 +17,7 @@ function cityClicked()
             if(resp['status'] == "OK")
             {
                 console.log("OK INIT")
-                serverStatus.innerHTML = "Connected."
+                serverStatus.innerHTML = "Connected to remote database"
 
             }
             else {
