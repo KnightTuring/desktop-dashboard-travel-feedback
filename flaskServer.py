@@ -89,7 +89,20 @@ def getTotalFeedback(cityName):
     count = count + len(userObjectList)
     return jsonify({'status':'OK' , 'count':count})
 
+@app.route('/get_positive_user_feed/<string:cityName>',methods=['GET'])
+def getPositiveUserFeed(cityName):
+    userObjectList = []
 
+    userObjectList = getGoodFeedback(dMap[cityName])
+    dictUser = {}
+    for user in userObjectList:
+        #print user.get_name()
+        #print user.get_hotel_review()
+        userName = user.get_name()
+        hotelRev = user.get_hotel_review()
+        dictUser.update({userName:hotelRev})
+    dictUser.update({'status':'OK'})
+    return jsonify(dictUser)
 '''
 This method transalates JSON into a map data structure that has 
 cityName(KEY) ---> User object (LIST)

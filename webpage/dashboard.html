@@ -8,15 +8,14 @@
     <script type="text/javascript" src="handler.js">
     </script>
 
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Oswald:300" rel="stylesheet">
     <style>
-      h1,h2 {
+      h1,h2,h3,h4 {
         font-family: 'Oswald', sans-serif;
       }
-      h3 {
-          font-family: 'Fjalla One',sans-serif;
-        }
 
     </style>
 
@@ -25,7 +24,7 @@
         <h3 class="w3-center">Feedback Dashboard</h3>
         <div class="w3-row w3-container">
             <div class="w3-half w3-container w3-center">
-                <select id="cityDropdownList">
+                <select class="w3-dropdown" id="cityDropdownList">
                     <!--
                      https://tutorialehtml.com/en/html-tutorial-drop-down-lists-menu/
                      -->
@@ -96,6 +95,40 @@
                     <footer class="w3-container w3-red">
                       <h3></h3>
                     </footer>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="w3-row w3-container">
+            <h1 class="w3-center"></h1>
+            <div class="w3-col s6 w3-container">
+                <div class="w3-card-4">
+                    <div class="w3-container">
+                        <h1>Pie Chart</h1>
+                    </div>
+
+                    <div class="w3-container">
+                        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                    </div>
+                    <button class="w3-button w3-black" onclick="displayChart()">Display Chart</button>
+                </div>
+            </div>
+
+            <div class="w3-col s6 w3-container">
+                <div class="w3-card-4">
+                    <div class="w3-container">
+                        <h1>User Feedback</h1>
+                    </div>
+
+                    <div id="showData">
+                    </div>
+                    <p></p>
+                    <div class="w3-container">
+                        <button class="w3-button w3-black" onclick="displayPositiveFeed()">Positive</button>
+                        <button class="w3-button w3-black" onclick="">Negative</button>
+                    </div>
 
                 </div>
             </div>
