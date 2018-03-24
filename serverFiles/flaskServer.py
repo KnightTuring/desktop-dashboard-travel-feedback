@@ -6,6 +6,7 @@ from firebase_admin import db
 import json
 from collections import defaultdict
 from textblob.classifiers import NaiveBayesClassifier
+from pyfcm import FCMNotification
 
 app = Flask(__name__)
 
@@ -31,6 +32,9 @@ class User:
 
     def get_hotel_review(self):
         return self.hotelReview
+
+    def get_overall_rating(self):
+        return self.overallRating
 
 
 '''
@@ -104,6 +108,18 @@ def getPositiveUserFeed(cityName):
     dictUser.update({'status':'OK'})
     return jsonify(dictUser)
 
+@app.route('/get_negative_user_feed/<string:cityName>',methods = ['GET'])
+def getNegativeUserFeed(cityName):
+    userObjectList= []
+    userObjectList = getBadFeedback(dMap[cityName])
+    dictUser = {}
+    for user in userObjectList:
+        userName = user.get_name()
+        hotelRev = user.get_hotel_review()
+        dictUser.update({userName:hotelRev})
+    dictUser.update({'status':'OK'})
+    return jsonify(dictUser)
+
 @app.route('/get_classifier_accuracy',methods=['GET'])
 def getClassifierAccuracy():
     test = [
@@ -115,6 +131,42 @@ def getClassifierAccuracy():
     acc = cl.accuracy(test)
 
     return jsonify({'accuracy':acc , 'status':'OK'})
+
+@app.route('/send_push_notif_negative/<string:cityName>', methods=['GET'])
+def sendPushNotif(cityName):
+    # api-key should be 'Server key' at console.firebase.google.com (your project page), under CLOUD MESSAGING tab.
+    push_service = FCMNotification(api_key="AAAA9oQvUyg:APA91bGNXpgabj-nGXKv-Njelm9pzKYdanbVWM9-hLKVOZZOt3H2xFTcIsfzbz9stzgCLi6D5JzjYvkPxZEKhVECP1ZOPtMJyT52MJWNLr7hPGjOSi9_TcKBmH6Cs7azN_XmZEW9fylX")
+    reg_id = getAdminTokenFCM();
+    print 'Received admin FCM token', reg_id
+    '''
+    Now get negative feed count
+    '''
+    userObjectList = []
+    count = 0
+    print dMap[cityName]
+    userObjectList = getBadFeedback(dMap[cityName])
+    count = len(userObjectList)
+    '''
+    Negative count stored in count
+    '''
+    message_title = "Negative Feedback"
+    message_body = cityName+" has "+str(count)+" negative feedback"
+    print 'sending push notif'
+    result = push_service.notify_single_device(registration_id=reg_id ,message_title=message_title, message_body=message_body )
+    return jsonify({'status':'OK','serviceStatus':result})
+
+@app.route('/get_average_score/<string:cityName>')
+def getAverageScore(cityName):
+    score = getAvgScore(dMap[cityName])
+    return jsonify({'status':'OK' , 'score':score})
+
+def getAdminTokenFCM():
+    refToken = db.reference('/adminToken')
+    print 'refToken is', refToken.get()
+    tokenDict = refToken.get()
+    fcmToken = tokenDict['token']
+    print 'FCM token received',fcmToken
+    return fcmToken
 
 
 '''
@@ -163,7 +215,7 @@ def getBadFeedback(userObjectList):
 
 '''
 Return bad feedback from given list of User object
-'''
+
 def getBadFeedback(userObjectList):
     outputList = []
     for user in userObjectList:
@@ -171,7 +223,21 @@ def getBadFeedback(userObjectList):
         if label == 'negative':
             outputList.append(user)
     return outputList
+'''
 
+'''
+Return average score of a city
+'''
+def getAvgScore(userObjectList):
+    total = 0
+    sum = 0
+    total =len(userObjectList)
+    print 'Total is',total
+    for user in userObjectList:
+        sum = sum + int(user.get_overall_rating())
+        print 'sum is', sum
+    avg = sum/total
+    return avg
 
 '''
 This method writes data to JSON file

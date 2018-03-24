@@ -42,7 +42,8 @@
             </div>
 
             <div class="w3-half w3-container w3-left">
-                <button class="w3-button w3-black" onclick="cityClicked()">Display Feedback</button>
+                <button class="w3-button w3-deep-orange" onclick="cityClicked()">Display Feedback</button>
+                <button class="w3-button w3-indigo" onclick="sendNotif()">Send Mobile Notification</button>
             </div>
         </div>
 
@@ -140,7 +141,7 @@
                     <p></p>
                     <div class="w3-container">
                         <button class="w3-button w3-black" onclick="displayPositiveFeed()">Positive</button>
-                        <button class="w3-button w3-black" onclick="">Negative</button>
+                        <button class="w3-button w3-black" onclick="displayNegativeFeed()">Negative</button>
                     </div>
 
                 </div>
@@ -177,7 +178,7 @@
                 </header>
 
                 <div class="w3-container w3-center">
-                      <h2 id="">XX . XX</h2>
+                      <h2 id="averageUserScore">XX . XX</h2>
                 </div>
 
                 <footer class="w3-container w3-teal">
