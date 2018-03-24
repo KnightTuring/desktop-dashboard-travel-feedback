@@ -13,9 +13,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Oswald:300" rel="stylesheet">
     <style>
-      h1,h2,h3,h4 {
+      h1,h2,h3,h4,h5,h6  {
         font-family: 'Oswald', sans-serif;
       }
+
+      #container {
+          overflow: auto;
+        }
 
     </style>
 
@@ -30,6 +34,10 @@
                      -->
                     <option value="Delhi">Delhi</option>
                     <option value="Ladakh">Ladakh</option>
+                    <option value="Aurangabad">Aurangabad</option>
+                    <option value="Kaniyakumari">Kaniyakumari</option>
+                    <option value="Pune">Pune</option>
+                    <option value="Port Blair">Port Blair</option>
                 </select>
             </div>
 
@@ -45,6 +53,7 @@
         <div class="w3-row w3-container">
 
             <h1 class="w3-center">Feedback Statistics</h1>
+
             <div class="w3-col w3-container s4 w3-center">
                 <div class="w3-card-4">
 
@@ -122,8 +131,12 @@
                         <h1>User Feedback</h1>
                     </div>
 
-                    <div id="showData">
+                    <div class="w3-container">
+                        <div id="showData">
+
+                        </div>
                     </div>
+
                     <p></p>
                     <div class="w3-container">
                         <button class="w3-button w3-black" onclick="displayPositiveFeed()">Positive</button>
@@ -134,6 +147,49 @@
             </div>
 
         </div>
+
+    <div class="w3-row w3-container">
+        <h1></h1>
+        <div class="w3-col s6 w3-container">
+
+            <div class="w3-card-4">
+                <header class="w3-container w3-white">
+                      <h1 class="w3-left">Classifier Accuracy</h1>
+                </header>
+
+                <div class="w3-container w3-center">
+                      <h2 id="classifierAccuracy">XX . XX %</h2>
+                </div>
+
+                <footer class="w3-container w3-purple">
+                      <h3></h3>
+                </footer>
+
+            </div>
+
+        </div>
+
+        <div class="w3-col s6 w3-container">
+
+            <div class="w3-card-4">
+                <header class="w3-container w3-white">
+                      <h1 class="w3-left">Average User Rating</h1>
+                </header>
+
+                <div class="w3-container w3-center">
+                      <h2 id="">XX . XX</h2>
+                </div>
+
+                <footer class="w3-container w3-teal">
+                      <h3></h3>
+                </footer>
+
+            </div>
+
+        </div>
+
+    </div>
+
 
     </body>
 

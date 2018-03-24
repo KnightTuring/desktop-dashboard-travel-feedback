@@ -111,6 +111,30 @@ function cityClicked()
         }
     });
 
+    var dispAcc = document.getElementById("classifierAccuracy")
+    $.ajax({
+        url:(URL+'/get_classifier_accuracy'),
+        dataType: 'json',
+        type:'get' ,
+        success:function(response){
+            console.log(response)
+            resp = JSON.parse(JSON.stringify(response))
+            console.log(resp['count'])
+            if(resp['status'] == "OK")
+            {
+                //console.log("OK CITY NEGATIVE FEED")
+                var percent = resp['accuracy'] * 100;
+                dispAcc.innerHTML = percent + '%'
+
+            }
+            else {
+              console.log("Failed")
+            }
+        },
+        error:function(response){
+        }
+    });
+
 
 }
 
@@ -141,6 +165,8 @@ function displayPositiveFeed()
 
     var userFeedbackList;
     var col = [];
+    var displayData = document.getElementById("showData");
+    var userFeed = ''
     $.ajax({
         url:(URL+'/get_positive_user_feed/'+strCity),
         dataType: 'json',
@@ -152,38 +178,17 @@ function displayPositiveFeed()
             if(resp['status'] == "OK")
             {
                 //print user feedback
-                for (var i = 0; i < resp.length; i++) {
-                    for (var key in resp[i]) {
-                        if (col.indexOf(key) === -1) {
-                            col.push(key);
-                        }
-                    }
-                }
 
-                var table = document.createElement("table")
-                var tr = table.insertRow(-1);
-                for (var i = 0; i < col.length; i++)
+                for(var key in resp)
                 {
-                    var th = document.createElement("th");      // TABLE HEADER.
-                    th.innerHTML = col[i];
-                    tr.appendChild(th);
-                }
-
-                for (var i = 0; i < resp.length; i++)
-                {
-
-                    tr = table.insertRow(-1);
-
-                    for (var j = 0; j < col.length; j++)
+                    console.log("Key is"+key);
+                    if(resp[key]!='OK')
                     {
-                        var tabCell = tr.insertCell(-1);
-                        tabCell.innerHTML = resp[i][col[j]];
+                        userFeed = userFeed + '<h5>' + key + '</h5>' + '<h6><i>' + resp[key] + '</i></h6>'
                     }
-                }
 
-                var divContainer = document.getElementById("showData");
-                divContainer.innerHTML = "";
-                divContainer.appendChild(table);
+                }
+                displayData.innerHTML = userFeed
             }
             else {
               console.log("Failed")

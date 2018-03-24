@@ -103,6 +103,20 @@ def getPositiveUserFeed(cityName):
         dictUser.update({userName:hotelRev})
     dictUser.update({'status':'OK'})
     return jsonify(dictUser)
+
+@app.route('/get_classifier_accuracy',methods=['GET'])
+def getClassifierAccuracy():
+    test = [
+        ('very bad','negative'),
+        ('quality needs to be maintained','negative'),
+        ('great arrangements','positive'),
+        ('good experience','positive')
+    ]
+    acc = cl.accuracy(test)
+
+    return jsonify({'accuracy':acc , 'status':'OK'})
+
+
 '''
 This method transalates JSON into a map data structure that has 
 cityName(KEY) ---> User object (LIST)
