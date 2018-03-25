@@ -136,8 +136,10 @@ def getClassifierAccuracy():
 def sendPushNotif(cityName):
     # api-key should be 'Server key' at console.firebase.google.com (your project page), under CLOUD MESSAGING tab.
     push_service = FCMNotification(api_key="AAAA9oQvUyg:APA91bGNXpgabj-nGXKv-Njelm9pzKYdanbVWM9-hLKVOZZOt3H2xFTcIsfzbz9stzgCLi6D5JzjYvkPxZEKhVECP1ZOPtMJyT52MJWNLr7hPGjOSi9_TcKBmH6Cs7azN_XmZEW9fylX")
-    reg_id = getAdminTokenFCM();
-    print 'Received admin FCM token', reg_id
+    #list of account tokens
+    registration_ids = []
+    registration_ids = getAdminTokenFCM();
+    print 'Received list of admin FCM token', registration_ids
     '''
     Now get negative feed count
     '''
@@ -152,7 +154,7 @@ def sendPushNotif(cityName):
     message_title = "Negative Feedback"
     message_body = cityName+" has "+str(count)+" negative feedback"
     print 'sending push notif'
-    result = push_service.notify_single_device(registration_id=reg_id ,message_title=message_title, message_body=message_body )
+    result = push_service.notify_multiple_devices(registration_ids=registration_ids ,message_title=message_title, message_body=message_body )
     return jsonify({'status':'OK','serviceStatus':result})
 
 @app.route('/get_average_score/<string:cityName>')
@@ -162,11 +164,16 @@ def getAverageScore(cityName):
 
 def getAdminTokenFCM():
     refToken = db.reference('/adminToken')
+    fcmTokenList = []
     print 'refToken is', refToken.get()
     tokenDict = refToken.get()
-    fcmToken = tokenDict['token']
-    print 'FCM token received',fcmToken
-    return fcmToken
+    adminList = list(tokenDict)
+    print 'Admin list is',adminList
+    for admin in adminList:
+        fcmToken = tokenDict[admin]['token']
+        fcmTokenList.append(str(fcmToken))
+    print 'FCM token list retrieved',fcmTokenList
+    return fcmTokenList
 
 
 '''
