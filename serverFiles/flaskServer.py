@@ -261,6 +261,7 @@ firebase_admin.initialize_app(cred, {
         'databaseURL': 'https://travel-junction.firebaseio.com',
         'databaseAuthVariableOverride': None
     })
+
 citiesList = []
 dMap = defaultdict(list)
 train = [
@@ -284,6 +285,12 @@ train = [
     ('not very good','negative'),
     ('bad','negative')
 ]
+
+'''
+with open('dataset.csv','r') as fp:
+    cl =NaiveBayesClassifier(fp, format="csv")
+'''
+
 cl = NaiveBayesClassifier(train)
 
 

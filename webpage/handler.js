@@ -185,6 +185,32 @@ function displayChart() {
     chart.render();
 }
 
+function displayBarChart()
+{
+    var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "+ / - Feedback"
+	},
+	axisY: {
+		title: "Total number"
+	},
+	data: [{
+		type: "column",
+		showInLegend: true,
+		legendMarkerColor: "grey",
+		//legendText: "MMbbl = one million barrels",
+		dataPoints: [
+			{ y: valueOfPosCount, label: "Positive" },
+			{ y: valueOfNegCount,  label: "Negative" }
+		]
+	    }]
+    });
+chart.render();
+
+}
+
 function displayPositiveFeed()
 {
 
